@@ -10,6 +10,7 @@ declare global {
             HOST: string;
             DATABASE_URL: string;
             API_KEY: string;
+            MONGODB_URI: string;
         }
     }
 }

@@ -4,7 +4,6 @@
 .env
 .env.local
 .env.*.local
-desktop.ini
 /jspm_packages
 
 # Testing

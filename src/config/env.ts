@@ -8,4 +8,5 @@ export const ENV = {
     HOST: process.env.HOST,
     DATABASE_URL: process.env.DATABASE_URL,
     API_KEY: process.env.API_KEY,
+    MONGODB_URI: process.env.MONGODB_URI,
 }
