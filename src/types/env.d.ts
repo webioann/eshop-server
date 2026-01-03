@@ -1,0 +1,15 @@
+// Use an empty export or import statement to make the file a module
+// and enable global augmentation
+export {};
+
+declare global {
+    namespace NodeJS {
+        interface ProcessEnv {
+            NODE_ENV: 'development' | 'production'; // Example with literal types
+            PORT: 8383; // Optional variables
+            HOST: string;
+            DATABASE_URL: string;
+            API_KEY: string;
+        }
+    }
+}

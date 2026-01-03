@@ -1,0 +1,28 @@
+# Dependencies
+/node_modules
+# protect sensitive files
+.env
+.env.local
+.env.*.local
+
+/jspm_packages
+
+# Testing
+/coverage
+
+# Production
+/build
+/dist
+/tmp
+
+# Misc
+.DS_Store
+*.log
+npm-debug.log*
+yarn-error.log*
+package-lock.json # Can be ignored if you use yarn, otherwise generally tracked
+yarn.lock         # Can be ignored if you use npm, otherwise generally tracked
+
+# Editors/OS
+.vscode
+.idea
