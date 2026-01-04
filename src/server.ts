@@ -27,7 +27,10 @@ if (ENV.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, '../admin', 'dist', 'index.html'));
     })
 }
-app.listen(ENV.PORT, () => {
+const runExpressServer = async () => {
     connectToMongoDB();
-    console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
-});
+    app.listen(ENV.PORT, () => {
+        console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
+    });
+}
+runExpressServer();
