@@ -1,6 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import path from 'node:path';
+import { clerkMiddleware } from '@clerk/express'
 import { ENV } from './config/env.ts';
 import { connectToMongoDB } from './config/mongodb.config.ts';
 
@@ -9,6 +10,11 @@ const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
+app.use(clerkMiddleware({
+    apiKey: ENV.CLERK_API_KEY,
+    secretKey: ENV.CLERK_SECRET_KEY,
+    frontendApi: ENV.CLERK_FRONTEND_API,
+}));
 
 app.get('/', (req: Request, res: Response) => {
     res.status(200).json({ message: `ENV is ${ENV.NODE_ENV}` });

@@ -11,6 +11,9 @@ declare global {
             DATABASE_URL: string;
             API_KEY: string;
             MONGODB_URI: string;
+            CLERK_PUBLISHABLE_KEY: string;
+            CLERK_SECRET_KEY: string;
+            CLERK_FRONTEND_API: string;
         }
     }
 }
