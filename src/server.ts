@@ -16,9 +16,9 @@ app.get('/', (req: Request, res: Response) => {
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../admin/build')));
+    app.use(express.static(path.join(__dirname, '../admin/dist')));
     app.get('*', (req: Request, res: Response) => {
-        res.sendFile(path.join(__dirname, '../admin', 'build', 'index.html'));
+        res.sendFile(path.join(__dirname, '../admin', 'dist', 'index.html'));
     })
 }
 app.listen(ENV.PORT, () => {
