@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import type { UserModelType } from '../types/model.types.ts'
+import type { UserType } from '../types/user.types.ts'
 
-const userSchema = new mongoose.Schema<UserModelType>(
+const userSchema = new mongoose.Schema<UserType>(
     {
         username: { 
             type: String, 
@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema<UserModelType>(
             lowercase: true,
             trim: true,
             lowercase: true,
-            match: [/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, 'Please fill a valid email address'],
+            // match: [/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/, 'Please fill a valid email address'],
         },
         password: { 
             type: String, 
@@ -30,9 +30,9 @@ const userSchema = new mongoose.Schema<UserModelType>(
         },
         updatedAt: { 
             type: Date, 
-            default: Date.now 
+            default: null
         },
-    }, options = { timestamps: true } 
+    }
 );
 const User = mongoose.model<UserModelType>('User', userSchema);
 

@@ -2,8 +2,12 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
-import { ENV } from './config/env.ts';
-import { connectToMongoDB } from './config/mongodb.config.ts';
+import { ENV } from './config/env.config.ts';
+import { connectToMongoDB } from './database/mongodb.ts';
+import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
+import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
+import { findOneUserById } from './controllers/findOneUserById.ts';
+import homeRoute from './routes/home.route.ts';
 
 // Load environment variables from .env file
 const app = express();
@@ -15,10 +19,8 @@ app.use(clerkMiddleware({
     secretKey: ENV.CLERK_SECRET_KEY,
     frontendApi: ENV.CLERK_FRONTEND_API,
 }));
-
-app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({ message: `ENV is ${ENV.NODE_ENV}` });
-});
+// Home page route
+app.use('/', homeRoute);
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
@@ -28,9 +30,18 @@ if (ENV.NODE_ENV === 'production') {
     })
 }
 const runExpressServer = async () => {
-    connectToMongoDB();
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-}
+    // await connectToMongoDB();
+    // await saveUserDataToMongodb({
+    //     username: 'testuser14456',
+    //     email: 'testuser14456@example.com',
+    //     password: 'password14456',
+    //     createdAt: new Date(),
+    //     updatedAt: null,
+    // }) 
+    // await getAllUsersFromMongodb();
+    // await findOneUserById('695d045842f60d5d4af72846');
+} 
 runExpressServer();

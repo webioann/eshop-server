@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
-import { ENV } from "./env.ts";
+import { ENV } from "../config/env.config.ts";
+
+// if ENV.MONGODB_URI is not defined stop the application
+if(!ENV.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables");
+}
 
 export const connectToMongoDB = async () => {
     try {
