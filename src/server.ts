@@ -8,6 +8,13 @@ import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
 import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
 import { findOneUserById } from './controllers/findOneUserById.ts';
 import homeRoute from './routes/home.route.ts';
+// TODO: remove this after testing
+import Data from './models/data.model.ts';
+import { saveDataToMongodb } from './controllers/saveData.ts';
+import type { DataType } from '../types/data.types.ts';
+import { deleteUserById } from './controllers/deleteUserById.ts';
+import { updateUserData } from './controllers/updateOneByFilter.ts';
+
 
 // Load environment variables from .env file
 const app = express();
@@ -33,15 +40,24 @@ const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    // await connectToMongoDB();
-    await saveUserDataToMongodb({
-        username: 'testuser1222',
-        email: 'testuser1222@example.com',
-        password: 'password1222',
-        createdAt: new Date(),
-        updatedAt: null,
-    }) 
+    await connectToMongoDB();
+    // await saveDataToMongodb({
+    //     data: 'just a test data',
+    //     timestamp: Date.now(),
+    // })
+
+
+    // await saveUserDataToMongodb({
+    //     username: 'testuser12372',
+    //     email: 'testuser12372@example.com',
+    //     password: 'password12372',
+    //     createdAt: new Date(),
+    //     updatedAt: null,
+    // }) 
     // await getAllUsersFromMongodb();
-    // await findOneUserById('695d045842f60d5d4af72846');
+    // await findOneUserById('695ec2b31244511a17db387a');
+
+    // await deleteUserById('695ec2b31244511a17db387a');
+    // await updateUserData({ password:"password123" }, { email: 'testuser8888888@example.com' });
 } 
 runExpressServer();

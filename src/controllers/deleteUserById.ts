@@ -1,12 +1,11 @@
 import User from '../models/user.model.ts';
 import type { UserType } from '../types/user.types.ts';
 
-export const findOneUserById = async (id: string) => {
+export const deleteUserById = async (id: string) => {
     
     try {
-        const user: UserType = await User.findById(id);
-        console.log("User ==> ", user);
-        return user;
+        await User.findByIdAndDelete(id);
+        console.log("User deleted successfully");
     } catch (error) {
         console.error("ERROR USER ERROR :", error);
     }
