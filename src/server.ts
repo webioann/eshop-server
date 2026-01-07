@@ -20,7 +20,7 @@ app.use(clerkMiddleware({
     frontendApi: ENV.CLERK_FRONTEND_API,
 }));
 // Home page route
-app.use('/', homeRoute);
+// app.use('/', homeRoute);
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
@@ -34,13 +34,13 @@ const runExpressServer = async () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
     // await connectToMongoDB();
-    // await saveUserDataToMongodb({
-    //     username: 'testuser14456',
-    //     email: 'testuser14456@example.com',
-    //     password: 'password14456',
-    //     createdAt: new Date(),
-    //     updatedAt: null,
-    // }) 
+    await saveUserDataToMongodb({
+        username: 'testuser1222',
+        email: 'testuser1222@example.com',
+        password: 'password1222',
+        createdAt: new Date(),
+        updatedAt: null,
+    }) 
     // await getAllUsersFromMongodb();
     // await findOneUserById('695d045842f60d5d4af72846');
 } 

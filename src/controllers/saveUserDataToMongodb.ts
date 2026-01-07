@@ -3,9 +3,9 @@ import type { UserType } from '../types/user.types.ts';
 
 export const saveUserDataToMongodb = async (userData: UserType) => {
     try {
-        const user = new User(userData);    
+        const user: UserType = new User(userData)
         await user.save();
-        console.log("User data saved to MongoDB");
+        console.log(`User saved to MongoDB`);
     } catch (error) {
         console.error("Error saving user data to MongoDB:", error);
         throw error;
