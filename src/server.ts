@@ -18,11 +18,6 @@ const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
-app.use(clerkMiddleware({
-    apiKey: ENV.CLERK_API_KEY,
-    secretKey: ENV.CLERK_SECRET_KEY,
-    frontendApi: ENV.CLERK_FRONTEND_API,
-}));
 // Home page route
 // app.use('/', homeRoute);
 
@@ -38,7 +33,7 @@ const runExpressServer = async () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
     await connectToMongoDB();
-    await EventEmitterLogger({ event_id: "success", message: "Server started and connected to MongoDB successfully." });
+    await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
     //     email: 'testuser12372@example.com',

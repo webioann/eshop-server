@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { format } from 'date-fns';
 import { EventEmitter } from 'events';
 import Logger from '../models/logger.model.ts';
@@ -9,12 +10,14 @@ const EventEmitterLogger = async ({event_id, message}: LoggerPropsType) => {
 
     try {
         let eventTime = format(new Date(), 'HH:mm:ss dd-MM-yy');
-        let logItem = `[${eventTime}]\t\t${event_id}\t${message}\n`;
+        let logItem = `[${eventTime}]\t${event_id}\t${message}\n`;
         const loggerData: LoggerDataType = {
+            timestamp: new Date(),
             formatted_timestamp: eventTime,
             event_id: event_id,
             message: message
         }
+        await Logger.create(loggerData);
         console.log(logItem, loggerData);
 
         // const newData: LoggerDataType = new Logger(data)

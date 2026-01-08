@@ -1,8 +1,12 @@
 import mongoose from 'mongoose'
-import type { LoggerType } from '../types/logger.types.js'
+import type { LoggerDataType } from '../types/logger.types.ts'
 
-const loggerSchema = new mongoose.Schema<LoggerType>(
+const loggerSchema = new mongoose.Schema<LoggerDataType>(
     {
+        timestamp: { 
+            type: Date, 
+            required: [ true, 'Timestamp is required' ],
+        },
         formatted_timestamp: { 
             type: String, 
             required: [ true, 'Formatted timestamp is required' ],
@@ -17,6 +21,6 @@ const loggerSchema = new mongoose.Schema<LoggerType>(
             required: [ true, 'Message is required' ],
         }
 })
-const Logger = mongoose.model<LoggerType>('Logger', loggerSchema);
+const Logger = mongoose.model<LoggerDataType>('Logger', loggerSchema);
 
 export default Logger;

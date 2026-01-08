@@ -2,6 +2,7 @@
 type eventId = "error" | "warning" | "success";
 // server events logger type
 export interface LoggerDataType {  
+    timestamp: Date;
     formatted_timestamp: string;
     event_id: eventId;
     message: string;

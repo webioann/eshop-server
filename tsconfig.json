@@ -9,7 +9,9 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "noCheck": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+
   },
   "typeRoots": ["./node_modules/@types", "./src/types/environment.d.ts"], // Include custom type definitions
   "include": ["src/**/*"], // Include all files in the src directory},
