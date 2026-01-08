@@ -1,4 +1,4 @@
-// TODO: Remove this after testing
+// server events logger type
 export interface DataType {
     data: string;
     timestamp: Date;

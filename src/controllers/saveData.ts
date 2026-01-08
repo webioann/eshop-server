@@ -1,5 +1,5 @@
 import Data from '../models/data.model.ts';
-import type { DataType } from '../types/data.types.ts';
+import type { DataType } from '../types/logger.types.js';
 
 export const saveDataToMongodb = async (data: DataType) => {
     try {
