@@ -16,6 +16,7 @@ import EventEmitterLogger from './controllers/EventEmitterLogger.ts';
 // routs 
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
+import loginRoute from './routes/login.route.ts'
 
 const app = express();
 const __dirname = path.resolve();
@@ -23,6 +24,7 @@ const __dirname = path.resolve();
 app.use(express.json());
 app.use('/', homeRoute);
 app.use('/auth/register', registerRoute)
+app.use('/auth/login', loginRoute)
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
