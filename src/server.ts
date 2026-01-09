@@ -28,12 +28,13 @@ if (ENV.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, '../admin', 'dist', 'index.html'));
     })
 }
+
 const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    await connectToMongoDB();
-    await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
+    // await connectToMongoDB();
+    // await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
     //     email: 'testuser12372@example.com',
