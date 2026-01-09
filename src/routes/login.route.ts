@@ -5,6 +5,7 @@ const router = express.Router();
 import User from '../models/user.model.ts';
 import type { UserType } from '../types/user.types.ts';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 router.post('', async (req: Request, res: Response) => {
     try{
@@ -14,9 +15,14 @@ router.post('', async (req: Request, res: Response) => {
             return res.status(400).json({ message: `User is not register go to Register page ==>` });
         }
         else {
-            // const passwordIsCorrect = await bcrypt.compare(password, user.password)
-            if( password === user.password ) {
-                return res.status(200).json({ user });
+            const passwordIsCorrect = await bcrypt.compare(password, user.password)
+            if( passwordIsCorrect ) {
+                const token = jwt.sign(
+                    { id: user._id }
+                    , ENV.JWT_SECRET,
+                    { expiresIn: "1h" }
+                )
+                return res.status(200).json({ token });
             }
             else {
                 return res.status(400).json({massage: `Email is correct but password is WRONG`});

@@ -9,7 +9,7 @@ declare global {
             PORT: 8383; // Optional variables
             HOST: string;
             DATABASE_URL: string;
-            API_KEY: string;
+            JWT_SECRET: string;
             MONGODB_USERS_URI: string;
             MONGODB_LOGGER_URI: string;
             CLERK_PUBLISHABLE_KEY: string;

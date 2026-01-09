@@ -9,11 +9,12 @@ router.post('', async (req: Request, res: Response) => {
     try{
         const { username, email, password } = req.body;
         const user = await User.findOne({username}).exec();
+        const hashedPassword = await bcrypt.hash(password, 10)
         if( user === null ) {
             const newUser = new User({
                 username,
                 email, 
-                password,
+                password: hashedPassword,
                 createdAt: new Date(),
                 updatedAt : null
             })

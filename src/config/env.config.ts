@@ -6,7 +6,7 @@ export const ENV = {
     PORT: process.env.PORT,
     HOST: process.env.HOST,
     DATABASE_URL: process.env.DATABASE_URL,
-    API_KEY: process.env.API_KEY,
+    JWT_SECRET: process.env.JWT_SECRET,
     MONGODB_USERS_URI: process.env.MONGODB_USERS_URI,
     MONGODB_LOGGER_URI: process.env.MONGODB_LOGGER_URI,
     CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
