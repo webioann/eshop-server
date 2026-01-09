@@ -21,7 +21,7 @@ router.post('', async (req: Request, res: Response) => {
             res.status(201).json({ message: `User ${username} created successfully` });
         }
         else {
-            res.status(400).json({ message: `User with this name ${username} already exist` });
+            return res.status(400).json({ message: `User with this name ${username} already exist` });
         }
     }
     catch (error) {

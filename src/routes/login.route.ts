@@ -11,18 +11,16 @@ router.post('', async (req: Request, res: Response) => {
         const { email, password } = req.body;
         const user = await User.findOne({email}).exec() as UserType
         if ( user === null ) {
-            res.status(400).json({ message: `User is not register go to Register page ==>` });
+            return res.status(400).json({ message: `User is not register go to Register page ==>` });
         }
-        else if( user.password === password ) {
-            res.status(200).json({ user });
-            console.log(`Welcome to APP`)
-        }
-        else if( user.password !== password ) {
-            res.status(400).json({massage: `Email is correct but password is WRONG`});
-            console.log(`Email is correct but password is WRONG`)
-        }
-        else{
-            res.status(404).json({massage: `Something went WRONG`});
+        else {
+            // const passwordIsCorrect = await bcrypt.compare(password, user.password)
+            if( password === user.password ) {
+                return res.status(200).json({ user });
+            }
+            else {
+                return res.status(400).json({massage: `Email is correct but password is WRONG`});
+            }
         }
     }
     catch (error) {
