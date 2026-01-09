@@ -1,7 +1,10 @@
+import mongoose from 'mongoose';
+
 // event variants 
 type eventId = "error" | "warning" | "success";
 // server events logger type
-export interface LoggerDataType {  
+export interface LoggerDataType { 
+    id: mongoose.Types.ObjectId
     timestamp: Date;
     formatted_timestamp: string;
     event_id: eventId;

@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
 import { ENV } from './config/env.config.ts';
-import { connectToMongoDB } from './database/mongodb.ts';
+import { connectToLoggerCollection } from './config/connectToLoggerCollection.ts';
 import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
 import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
 import { findOneUserById } from './controllers/findOneUserById.ts';
@@ -33,7 +33,7 @@ const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    // await connectToMongoDB();
+    await connectToLoggerCollection();
     // await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
