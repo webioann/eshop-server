@@ -3,23 +3,26 @@ import type { Request, Response } from 'express';
 import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
 import { ENV } from './config/env.config.ts';
+// connections to MongoDB functions for two different collections
 import { connectToLoggerCollection } from './config/connectToLoggerCollection.ts';
+import { connectToUsersCollection } from './config/connectToUsersCollection.ts';
+// controllers for work with MongoDB
 import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
 import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
 import { findOneUserById } from './controllers/findOneUserById.ts';
-import homeRoute from './routes/home.route.ts';
 import { deleteUserById } from './controllers/deleteUserById.ts';
 import { updateUserData } from './controllers/updateOneByFilter.ts';
 import EventEmitterLogger from './controllers/EventEmitterLogger.ts';
+// routs 
+import homeRoute from './routes/home.route.ts';
+import registerRoute from './routes/register.route.ts';
 
-
-// Load environment variables from .env file
 const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
-// Home page route
-// app.use('/', homeRoute);
+app.use('/', homeRoute);
+app.use('/auth/register', registerRoute)
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
@@ -33,7 +36,8 @@ const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    await connectToLoggerCollection();
+    // await connectToLoggerCollection();
+    await connectToUsersCollection();
     // await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
