@@ -8,10 +8,8 @@ import bcrypt from 'bcryptjs';
 router.post('', async (req: Request, res: Response) => {
     try{
         const { username, email, password } = req.body;
-        // const hashedPassword = bcrypt.hash(password, 10)
-        // check if User exists on Mongodb > eshop-db > users 
-        const ifUserExist = await User.findOne({username: username}).exec();
-        if( ifUserExist === null ) {
+        const user = await User.findOne({username}).exec();
+        if( user === null ) {
             const newUser = new User({
                 username,
                 email, 
