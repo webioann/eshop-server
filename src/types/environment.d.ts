@@ -10,8 +10,7 @@ declare global {
             HOST: string;
             DATABASE_URL: string;
             JWT_SECRET: string;
-            MONGODB_USERS_URI: string;
-            MONGODB_LOGGER_URI: string;
+            MONGODB_URI: string;
             CLERK_PUBLISHABLE_KEY: string;
             CLERK_SECRET_KEY: string;
             CLERK_FRONTEND_API: string;

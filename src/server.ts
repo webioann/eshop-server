@@ -4,8 +4,7 @@ import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
 import { ENV } from './config/env.config.ts';
 // connections to MongoDB functions for two different collections
-import { connectToLoggerCollection } from './config/connectToLoggerCollection.ts';
-import { connectToUsersCollection } from './config/connectToUsersCollection.ts';
+import { connection } from './config/connection.ts';
 // controllers for work with MongoDB
 import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
 import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
@@ -17,6 +16,7 @@ import EventEmitterLogger from './controllers/EventEmitterLogger.ts';
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
+import testRoute from './routes/test.route.ts';
 
 const app = express();
 const __dirname = path.resolve();
@@ -25,6 +25,7 @@ app.use(express.json());
 app.use('/', homeRoute);
 app.use('/auth/register', registerRoute)
 app.use('/auth/login', loginRoute)
+app.use('/test', testRoute);
 
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
@@ -38,8 +39,7 @@ const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    await connectToLoggerCollection();
-    // await connectToUsersCollection();
+    await connection();
     await EventEmitterLogger({ event_id: "error", message: "Server crashed" });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
