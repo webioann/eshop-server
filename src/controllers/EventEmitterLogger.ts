@@ -12,6 +12,7 @@ const EventEmitterLogger = async ({event_id, message}: LoggerPropsType) => {
         let eventTime = format(new Date(), 'HH:mm:ss dd-MM-yy');
         let logItem = `[${eventTime}]\t${event_id}\t${message}\n`;
         const loggerData: LoggerDataType = {
+            id: new mongoose.Types.ObjectId(),
             timestamp: new Date(),
             formatted_timestamp: eventTime,
             event_id: event_id,

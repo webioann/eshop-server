@@ -1,9 +1,10 @@
 import User from '../models/user.model.ts';
 import type { UserType } from '../types/user.types.ts';
 
-type PartialUserType = Partial<UserType>;
+type PartialUserType = Omit<UserType, '_id' | 'createdAt' | 'updatedAt' | 'password'>;
+type filterType = Record<keyof PartialUserType, any>;
 
-export const updateUserData = async (filter: PartialUserType, updateData: PartialUserType) => {
+export const updateUserData = async (filter: filterType, updateData: PartialUserType) => {
     try {
         const updatedUserData = await User.findOneAndUpdate(filter, updateData,
             { new: true });

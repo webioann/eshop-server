@@ -38,9 +38,9 @@ const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    // await connectToLoggerCollection();
-    await connectToUsersCollection();
-    // await EventEmitterLogger({ event_id: "success", message: "Server started successfully." });
+    await connectToLoggerCollection();
+    // await connectToUsersCollection();
+    await EventEmitterLogger({ event_id: "error", message: "Server crashed" });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
     //     email: 'testuser12372@example.com',
