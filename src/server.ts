@@ -17,16 +17,21 @@ import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
 import testRoute from './routes/test.route.ts';
+import ErrorMiddleware  from './middleware/error.middleware.ts';
 
 const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
+
+// routs ---------------
 app.use('/', homeRoute);
 app.use('/auth/register', registerRoute)
 app.use('/auth/login', loginRoute)
 app.use('/test', testRoute);
 
+
+app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../admin/dist')));
@@ -34,13 +39,13 @@ if (ENV.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, '../admin', 'dist', 'index.html'));
     })
 }
-
+app.use(ErrorMiddleware)
 const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
     await connection();
-    await EventEmitterLogger({ event_id: "error", message: "Server crashed" });
+    // await EventEmitterLogger({ event_id: "error", message: "Server crashed" });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
     //     email: 'testuser12372@example.com',

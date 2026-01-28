@@ -1,9 +1,10 @@
 import type{ Request, Response } from 'express';
 import { ENV } from '../config/env.config.ts';
 import express from 'express';
-const router = express.Router();
 import User from '../models/user.model.ts';
 import bcrypt from 'bcryptjs';
+
+const router = express.Router();
 
 router.post('', async (req: Request, res: Response) => {
     try{
