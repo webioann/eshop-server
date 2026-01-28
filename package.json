@@ -8,10 +8,10 @@
     "url": "---"
   },
   "main": "server.ts",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
-    "start": "node dist/index.js",
+    "start": "node dist/server.js",
     "build": "tsc"
   },
   "keywords": [],

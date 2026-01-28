@@ -2,7 +2,7 @@ import express from 'express';
 import type { Request, Response } from 'express';
 import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
-import { ENV } from './config/env.config.ts';
+import { ENV } from './config/env.ts';
 // connections to MongoDB functions for two different collections
 import { connection } from './config/connection.ts';
 // controllers for work with MongoDB
@@ -15,6 +15,7 @@ import EventEmitterLogger from './controllers/EventEmitterLogger.ts';
 // routs 
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
+
 import loginRoute from './routes/login.route.ts'
 import testRoute from './routes/test.route.ts';
 import ErrorMiddleware  from './middleware/error.middleware.ts';
@@ -35,7 +36,7 @@ app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
 if (ENV.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../admin/dist')));
-    app.get('*', (req: Request, res: Response) => {
+    app.get("/{*any}", (req: Request, res: Response) => {
         res.sendFile(path.join(__dirname, '../admin', 'dist', 'index.html'));
     })
 }

@@ -1,5 +1,5 @@
 import type{ Request, Response, NextFunction} from 'express';
-import { ENV } from '../config/env.config.ts';
+import { ENV } from '../config/env.ts';
 import express from 'express';
 const router = express.Router();
 // import { CustomErrorHandler } from '../middleware/error.middleware.ts';

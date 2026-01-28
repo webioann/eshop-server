@@ -1,5 +1,5 @@
 import type{ Request, Response } from 'express';
-import { ENV } from '../config/env.config.ts';
+import { ENV } from '../config/env.ts';
 import express from 'express';
 import User from '../models/user.model.ts';
 import bcrypt from 'bcryptjs';
