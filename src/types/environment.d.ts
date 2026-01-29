@@ -10,6 +10,8 @@ declare global {
             HOST: string;
             DATABASE_URL: string;
             JWT_SECRET: string;
+            USERS_DB_URI: string;
+            PRODUCTS_DB_URI: string;
             MONGODB_URI: string;
             CLERK_PUBLISHABLE_KEY: string;
             CLERK_SECRET_KEY: string;
