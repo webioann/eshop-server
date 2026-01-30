@@ -22,6 +22,11 @@ function ErrorMiddleware(err: CustomErrorHandler, req: Request, res: Response, n
             error: error.message,
             status: error.statusCode
         });
+        console.log({
+            success: false,
+            error: error.message,
+            status: error.statusCode
+        });
     } catch (errorEventObject) {
         next(errorEventObject)
     }
