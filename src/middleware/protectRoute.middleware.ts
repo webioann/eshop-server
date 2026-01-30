@@ -1,0 +1,23 @@
+import type { Response, Request, NextFunction } from "express";
+import { fakeAuth } from "../utils/fakeAuth.ts";
+import User from "../models/user.model.ts"
+
+export const protectRoute = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const user = fakeAuth("user")
+        if(!user) {
+            return res.status(401).json({ message: "Unauthorized - invalid token" })
+        }
+        const userData = await User.findOne({username: user.username})
+        if(!userData) {
+            return res.status(404).json({ message: "User not found" })
+        }
+        // req.body.user = userData
+        console.log(`USER ==> ${userData}`);
+        console.log(`REQUEST ==> ${req}`);
+        next();
+    }catch(error) {
+        console.error("Error in protectRoute middleware", error)
+        res.status(500).json({ message: "Internal server error" })
+    }
+}

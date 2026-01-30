@@ -6,9 +6,9 @@ import { connection, connectToUsersDB } from './config/connection.ts';
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
-import testRoute from './routes/test.route.ts';
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import EventMiddleware from './middleware/event_logger.middleware.ts';
+import { protectRoute } from './middleware/protectRoute.middleware.ts';
 
 const app = express();
 const __dirname = path.resolve();
@@ -16,14 +16,9 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 // routs ---------------
-app.use('/', homeRoute);
+app.use('/', protectRoute, homeRoute);
 app.use('/auth/register', registerRoute)
 app.use('/auth/login', loginRoute)
-app.use('/test', testRoute);
-
-
-
-
 
 app.use(ErrorMiddleware);
 app.use(EventMiddleware);
