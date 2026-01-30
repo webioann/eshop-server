@@ -11,7 +11,7 @@ export class EventLogger extends Error {
     }
 }
 
-function ErrorMiddleware(err: EventLogger, req: Request, res: Response, next: NextFunction) {
+function EventMiddleware(err: EventLogger, req: Request, res: Response, next: NextFunction) {
     try{
         let logger = { ...err }
         logger.statusCode = err.statusCode || 500;
@@ -29,4 +29,4 @@ function ErrorMiddleware(err: EventLogger, req: Request, res: Response, next: Ne
     }
 };
 
-export default ErrorMiddleware;
+export default EventMiddleware;

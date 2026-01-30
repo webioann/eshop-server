@@ -4,7 +4,7 @@ import path from 'node:path';
 import { clerkMiddleware } from '@clerk/express'
 import { ENV } from './config/env.ts';
 // connections to MongoDB functions for two different collections
-import { connection } from './config/connection.ts';
+import { connection, connectToUsersDB } from './config/connection.ts';
 // controllers for work with MongoDB
 import { saveUserDataToMongodb } from './controllers/saveUserDataToMongodb.ts';
 import { getAllUsersFromMongodb } from './controllers/getAllUsersFromMongodb.ts';
@@ -19,6 +19,7 @@ import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
 import testRoute from './routes/test.route.ts';
 import ErrorMiddleware  from './middleware/error.middleware.ts';
+import EventMiddleware from './middleware/event_logger.middleware.ts';
 
 const app = express();
 const __dirname = path.resolve();
@@ -41,11 +42,13 @@ if (ENV.NODE_ENV === 'production') {
     })
 }
 app.use(ErrorMiddleware)
+app.use(EventMiddleware);
 const runExpressServer = async () => {
     app.listen(ENV.PORT, () => {
         console.log(`Server is running at http://${ENV.HOST}:${ENV.PORT} and ENV is ${ENV.NODE_ENV}`);
     });
-    await connection();
+    // await connection();
+    await connectToUsersDB();
     // await EventEmitterLogger({ event_id: "error", message: "Server crashed" });
     // await saveUserDataToMongodb({
     //     username: 'testuser12372',
