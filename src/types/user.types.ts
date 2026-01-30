@@ -1,10 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
+
+export type RolesType  = "user" | "admin";
 
 export interface UserType extends mongoose.Document {
-    id: mongoose.Types.ObjectId;
+    _id: Types.ObjectId;
     username: string;
     email: string;
     password: string;
+    role: RolesType;
     createdAt: Date;
-    updatedAt: Date | null;
 }

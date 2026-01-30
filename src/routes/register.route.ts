@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('', async (req: Request, res: Response) => {
     try{
-        const { username, email, password } = req.body;
+        const { username, email, password, role } = req.body;
         const user = await User.findOne({username}).exec();
         const hashedPassword = await bcrypt.hash(password, 10)
         if( user === null ) {
@@ -16,8 +16,8 @@ router.post('', async (req: Request, res: Response) => {
                 username,
                 email, 
                 password: hashedPassword,
+                role: role,
                 createdAt: new Date(),
-                updatedAt : null
             })
             await newUser.save();
             res.status(201).json({ message: `User ${username} created successfully` });
