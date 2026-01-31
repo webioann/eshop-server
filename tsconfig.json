@@ -13,8 +13,16 @@
     "allowImportingTsExtensions": true
 
   },
-  "typeRoots": ["./node_modules/@types", "./src/types/environment.d.ts", "./src/types/express.d.ts"], // Include custom type definitions
-  "include": ["src/**/*.ts", "src/config/env.ts"], // Include all files in the src directory},
+  "typeRoots": [
+    "./node_modules/@types", 
+    "./src/types/environment.d.ts", 
+    "./src/types/express.d.ts"
+  ], // Include custom type definitions
+  "include": [
+    "src/**/*.ts", 
+    ".src/types/express.d.ts",
+    ".src/config/env.ts"
+  ], // Include all files in the src directory},
   "exclude": ["node_modules"]
 }
     // "noEmit": true,

@@ -15,7 +15,8 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 // routs ---------------
-app.use('/', [protectRoute], homeRoute);
+app.use('/', homeRoute);
+app.use('/test', homeRoute);
 app.use('/auth/register', registerRoute)
 app.use('/auth/login', loginRoute)
 

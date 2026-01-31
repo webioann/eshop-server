@@ -19,6 +19,6 @@ export const fakeAuth = (role: RolesType) => {
         createdAt: new Date,
     } as UserType
 
-    if( role === "user" ) return user
+    if( role === "user" ) return null
     if( role === "admin" ) return admin
 }
