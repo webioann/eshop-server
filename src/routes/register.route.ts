@@ -22,8 +22,16 @@ router.post('', async (req: Request, res: Response) => {
             await newUser.save();
             res.status(201).json({ message: `User ${username} created successfully` });
         }
-        else {
-            return res.status(400).json({ message: `User with this name ${username} already exist` });
+        // User already exists
+        if(user !== null) {
+            if( user.email === email && user.password === hashedPassword ) {
+                res.status(200).json({ message: `User ${username} welcome back` });
+            }
+            // if password is not correct
+            if( user.email === email && user.password !== hashedPassword ) {
+                res.status(203).json({ message: `User with email: ${email} already exists, but password is wrong - enter correct password` });
+            }
+
         }
     }
     catch (error) {
