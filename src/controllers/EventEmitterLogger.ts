@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { format } from 'date-fns';
 import { EventEmitter } from 'events';
 import Logger from '../models/logger.model.ts';
-import type { LoggerDataType, LoggerPropsType } from '../../../@types/logger.types.ts'
+import type { LoggerDataType, LoggerPropsType } from '@shared-types/logger.types.ts'
 
 const EventEmitterLogger = async ({event_id, message}: LoggerPropsType) => {
     class MyEmitter extends EventEmitter {};

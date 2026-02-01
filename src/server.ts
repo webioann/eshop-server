@@ -16,7 +16,7 @@ app.use(express.json());
 
 // routs ---------------
 app.use('/', homeRoute);
-app.use('/test', homeRoute);
+app.use('/test', protectRoute, homeRoute);
 app.use('/auth/register', registerRoute)
 app.use('/auth/login', loginRoute)
 
