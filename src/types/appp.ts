@@ -11,6 +11,14 @@ export interface ProductType {
     // createdAt: string;
     // updatedAt: string;
 }
+        // "../../ecommerce/@types/address.types.ts",
+        // "../../ecommerce/@types/cart.types.ts",
+        // "../../ecommerce/@types/product.types.ts",
+        // "../../ecommerce/@types/order.types.ts",
+        // "../../ecommerce/@types/review.types.ts",
+        // "../../ecommerce/@types/user.types.ts",
+        // "../../ecommerce/@types/logger.types.ts",
+
 
 export interface User {
     _id: string;

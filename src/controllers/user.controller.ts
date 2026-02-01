@@ -1,5 +1,5 @@
 import User from '../models/user.model.ts';
-import type { UserType } from '../types/user.types.ts';
+import type { UserType } from '../../../@types/user.types.ts';
 
 type PartialUserType = Omit<UserType, '_id' | 'createdAt' | 'updatedAt' | 'password'>;
 type filterType = Record<keyof PartialUserType, any>;

@@ -3,7 +3,7 @@ import { ENV } from '../config/env.ts';
 import express from 'express';
 const router = express.Router();
 import User from '../models/user.model.ts';
-import type { UserType } from '../types/user.types.ts';
+import type { UserType } from '@shared-types/user.types.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 

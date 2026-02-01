@@ -1,4 +1,4 @@
-import type { UserType, RolesType } from "../types/user.types.ts";
+import type { UserType, RolesType } from "@shared-types/user.types.ts";
 import mongoose, { Types } from 'mongoose';
 
 export const fakeAuth = (role: RolesType) => {

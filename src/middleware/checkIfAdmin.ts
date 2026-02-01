@@ -1,5 +1,4 @@
 import type { Response, Request, NextFunction } from "express";
-import type { UserType } from "../types/user.types.ts";
 
 export const checkIfAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try{

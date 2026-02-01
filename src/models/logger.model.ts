@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import type { LoggerDataType } from '../types/logger.types.ts'
+import type { LoggerDataType } from '@shared-types/logger.types.ts'
 
 const loggerSchema = new mongoose.Schema<LoggerDataType>(
     {
