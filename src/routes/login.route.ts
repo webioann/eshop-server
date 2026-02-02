@@ -1,5 +1,5 @@
 import type{ Request, Response } from 'express';
-import { ENV } from '../config/env.ts';
+import config  from '../config/env.ts';
 import express from 'express';
 const router = express.Router();
 import User from '../models/user.model.ts';
@@ -19,7 +19,7 @@ router.post('', async (req: Request, res: Response) => {
             if( passwordIsCorrect ) {
                 const token = jwt.sign(
                     { id: user._id }
-                    , ENV.JWT_SECRET,
+                    , config.JWT_SECRET,
                     { expiresIn: "1h" }
                 )
                 return res.status(200).json({ token });
