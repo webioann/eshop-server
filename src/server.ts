@@ -8,11 +8,15 @@ import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
+import { generateUsername } from './utils/generateUsername.ts';
 
 const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
+
+let name = generateUsername();
+console.log(`NAME ==> ${name}`);
 
 // routs ---------------
 app.use('/', homeRoute);

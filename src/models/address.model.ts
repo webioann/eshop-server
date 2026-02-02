@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { AddressType } from '@shared-types/address.types.ts'
+import type { AddressType } from '@shared-types/address.types.ts'
 
 export const addressSchema = new mongoose.Schema<AddressType>({
     label: {
