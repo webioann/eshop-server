@@ -8,9 +8,11 @@ declare global {
             NODE_ENV: 'development' | 'production'; // Example with literal types
             PORT: 8383; // Optional variables
             HOST: string;
-            DATABASE_URL: string;
             JWT_ACCESS_SECRET: string;
             JWT_REFRESH_SECRET: string;
+            ACCESS_TOKEN_EXPIRY: string;
+            REFRESH_TOKEN_EXPIRY: string;
+
             USERS_DB_URI: string;
             PRODUCTS_DB_URI: string;
             MONGODB_URI: string;

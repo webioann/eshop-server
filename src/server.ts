@@ -10,12 +10,13 @@ import authRoute from './routes/auth.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
-
+app.use(cookieParser());
 let name = generateUsername();
 console.log(`NAME ==> ${name}`);
 
