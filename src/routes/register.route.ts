@@ -24,7 +24,8 @@ router.post('/', async (req: Request, res: Response) => {
         }
         // User already exists
         if(user !== null) {
-            if( user.email === email && user.password === hashedPassword ) {
+            const decryptedPassword = await bcrypt.compare(user.password, hashedPassword)
+            if( user.email === email && decryptedPassword ) {
                 res.status(200).json({ message: `User ${username} welcome back` });
             }
             // if password is not correct

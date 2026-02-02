@@ -23,11 +23,22 @@ const userSchema = new mongoose.Schema<UserType>(
             required: [ true, 'Password is required' ],
             minLength: 6
         },
+        imageUrl: {
+            type: String,
+            required: true,
+            default: "https://i.pravatar.cc/150?img=52"
+        },
         role: {
             type: String,
             enum: ["user", "admin"],
             required: true,
             default: "user"
+        },
+        provider: {
+            type: String,
+            required: [true, "In app used only 3 providers"],
+            enum: ["credentials", "google", "github"],
+            default: "credentials"
         },
         createdAt: {
             type: Date, 
