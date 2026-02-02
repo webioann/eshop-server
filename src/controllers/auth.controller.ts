@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import User from '../models/user.model.ts';
+import Token from '../models/token.model.ts';
 import type { UserType } from '@shared-types/user.types.ts';
 import bcrypt from 'bcryptjs';
 import { generateUsername } from '../utils/generateUsername.ts';
@@ -23,6 +24,11 @@ const register = async (req: Request, res: Response): Promise<void> => {
         })
         const accessToken = createAccessToken(newUser._id);
         const refreshToken = createRefreshToken(newUser._id);
+        // save refresh token to MongoDB ===
+        await Token.create({
+            token: refreshToken,
+            userId: newUser._id
+        })
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             secure: config.NODE_ENV === "production",
