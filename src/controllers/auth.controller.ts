@@ -1,27 +1,29 @@
-import type{ Request, Response } from 'express';
-import { ENV } from '../config/env.ts';
-import express from 'express';
+import type { Request, Response } from 'express';
 import User from '../models/user.model.ts';
+import type { UserType } from '@shared-types/user.types.ts';
 import bcrypt from 'bcryptjs';
+import { generateUsername } from '../utils/generateUsername.ts';
 
-const router = express.Router();
 
-router.post('/', async (req: Request, res: Response): Promise<void> => {
+type MainUserDataType = Pick<UserType, "email" | "password" | "role">
+
+const register = async (req: Request, res: Response): Promise<void> => {
     try{
-        const { username, email, password, role } = req.body;
+        const { email, password, role } = req.body as MainUserDataType;
+        const username = generateUsername();
         const user = await User.findOne({username}).exec();
         const hashedPassword = await bcrypt.hash(password, 10)
         if( user === null ) {
             const newUser = new User({
                 username,
                 email, 
-                password: hashedPassword,
-                role: role,
+                password,
+                role,
                 createdAt: new Date(),
             })
             // test commit
             await newUser.save();
-            res.status(201).json({ message: `User ${username} created successfully` });
+            res.status(201).json({ message: `User ${username} created SUCCessfully` });
         }
         // User already exists
         if(user !== null) {
@@ -39,8 +41,13 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
     catch (error) {
         res
             .status(500)
-            .json({ message: `Something went wrong on Register page !!!` });
+            .json({
+                message: "Error during registration",
+                code: "ServerError",
+                error
+            });
     } 
-});
 
-export default router;
+};
+
+export default register;
