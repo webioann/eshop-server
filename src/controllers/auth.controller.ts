@@ -12,6 +12,13 @@ type MainUserDataType = Pick<UserType, "email" | "password" | "role">
 const register = async (req: Request, res: Response): Promise<void> => {
     try{
         const { email, password, role } = req.body as MainUserDataType;
+        if(role === "admin" && !config.WHITELIST.includes(email)) {
+            res.status(403).json({
+                code: "AuthorizationError",
+                message: "You cannot be as ADMIN"
+            })
+            return;
+        }
         // generate User name in time "development" mode only
         const username = generateUsername();
         const hashedPassword = await bcrypt.hash(password, 10)

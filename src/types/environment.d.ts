@@ -12,6 +12,7 @@ declare global {
             JWT_REFRESH_SECRET: string;
             ACCESS_TOKEN_EXPIRY: string;
             REFRESH_TOKEN_EXPIRY: string;
+            WHITELIST: string[];
 
             USERS_DB_URI: string;
             PRODUCTS_DB_URI: string;
