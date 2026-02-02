@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import type { UserType } from '@shared-types/user.types.ts'
+import { addressSchema } from './address.model.ts';
 
 const userSchema = new mongoose.Schema<UserType>(
     {
@@ -40,11 +41,17 @@ const userSchema = new mongoose.Schema<UserType>(
             enum: ["credentials", "google", "github"],
             default: "credentials"
         },
+        addresses: [addressSchema],
+        wishlist: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product", 
+        }],
         createdAt: {
             type: Date, 
             default: Date.now 
         },
-    }
+    },
+    { timestamps: true }
 );
 const User = mongoose.model<UserType>('User', userSchema);
 
