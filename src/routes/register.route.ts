@@ -19,6 +19,7 @@ router.post('/', async (req: Request, res: Response) => {
                 role: role,
                 createdAt: new Date(),
             })
+            // test commit
             await newUser.save();
             res.status(201).json({ message: `User ${username} created successfully` });
         }
