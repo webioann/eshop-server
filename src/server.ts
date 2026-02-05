@@ -28,8 +28,8 @@ app.use('/test', protectRoute, homeRoute);
 app.use('/auth/login', loginRoute)
 app.use('/auth/register', registerRoute)
 // products fetching --------------------
-app.use('/products', getAllProductsRoute)
-app.use('/products/:id', getAllProductsRoute)
+app.use('/api/products', getAllProductsRoute)
+app.use('/api/products/:id', getAllProductsRoute)
 // creating products API using admin routes ---
 
 app.use(ErrorMiddleware);
