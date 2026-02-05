@@ -6,7 +6,7 @@ import { connectToUsersDB } from './config/connectToUserDB.ts';
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
-import authRoute from './routes/auth.route.ts'
+// import authRoute from './routes/auth.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
@@ -23,8 +23,8 @@ console.log(`NAME ==> ${name}`);
 // routs ---------------
 app.use('/', homeRoute);
 app.use('/test', protectRoute, homeRoute);
-app.use('/auth', authRoute)
 app.use('/auth/login', loginRoute)
+app.use('/auth/register', registerRoute)
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
@@ -35,10 +35,10 @@ if (config.NODE_ENV === 'production') {
     })
 }
 
-const runExpressServer = async () => {
+( async () => {
     app.listen(config.PORT, () => {
         console.log(`Server is running at http://${config.HOST}:${config.PORT} and ENV is ${config.NODE_ENV}`);
     });
     await connectToUsersDB();
-} 
-runExpressServer();
+}) ();
+
