@@ -6,11 +6,9 @@ import { connectToUsersDB } from './config/connectToUserDB.ts';
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
-import getAllProductsRoute from './routes/getAllProducts.route.ts'
-import getProductByIdRoute from './routes/getProductById.route.ts'
-import createNewProductRoute from './routes/createNewProduct.route.ts'
-import updateProductRoute from './routes/updateProduct.route.ts'
-import deleteProductRoute from './routes/deleteProduct.route.ts'
+import adminRoute from './routes/admin.route.ts'
+import productsRoute from './routes/product.route.ts'
+
 
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
@@ -25,17 +23,18 @@ app.use(cookieParser());
 
 // routs ---------------
 app.use('/', homeRoute);
-app.use('/test', protectRoute, homeRoute);
+app.use('/test', protectRoute, homeRoute)
 // authentication -----------------------
 app.use('/auth/login', loginRoute)
 app.use('/auth/register', registerRoute)
-// products fetching --------------------
-app.use('/api/products', getAllProductsRoute)
-app.use('/api/products/:id', getProductByIdRoute)
-// creating products API using admin routes ---
-app.use("/admin/products", createNewProductRoute)
-app.use("/admin/products/:id", updateProductRoute)
-app.use("/admin/products/:id", deleteProductRoute)
+app.use('/api', productsRoute)
+app.use("/admin", adminRoute)
+
+// app.use("/admin/products", createNewProductRoute)
+// app.use("/admin/products/:id", updateProductRoute)
+// app.use("/admin/products/:id", deleteProductRoute)
+// app.use("/admin", deleteP)
+
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION

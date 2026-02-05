@@ -1,10 +1,19 @@
 import type{ Request, Response } from 'express';
-import { Types } from 'mongoose';
-import express from 'express';
 import Product from '../models/product.model.ts';
-const router = express.Router();
 
-router.get('/:id', async (req: Request, res: Response) => {
+export const getAllProducts = async (req: Request, res: Response) => {
+    try{
+        // most recent products first ( -1 )
+        // if need use search params
+        const products = await Product.find().sort({ createdAt: -1 });
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+        console.error("Error fetching products:", error);
+    }
+};
+
+export const getProductById = async (req: Request, res: Response) => {
     try{
         const { id } = req.params;
         const product = await Product.findById(id);
@@ -16,6 +25,4 @@ router.get('/:id', async (req: Request, res: Response) => {
         res.status(500).json({ message: "Internal server error" });
         console.error("Error fetching product by ID:", error);
     }
-});
-
-export default router;
+};
