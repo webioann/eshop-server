@@ -8,6 +8,7 @@ declare global {
             NODE_ENV: 'development' | 'production'; // Example with literal types
             PORT: 8383; // Optional variables
             HOST: string;
+            // AUTHENTICATION =====
             JWT_ACCESS_SECRET: string;
             JWT_REFRESH_SECRET: string;
             ACCESS_TOKEN_EXPIRY: string;
