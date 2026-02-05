@@ -7,7 +7,8 @@ import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
 import getAllProductsRoute from './routes/getAllProducts.route.ts'
-import detProductById from './routes/getProductById.route.ts'
+import getProductByIdRoute from './routes/getProductById.route.ts'
+import createNewProductRoute from './routes/createNewProduct.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
@@ -18,8 +19,6 @@ const __dirname = path.resolve();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-let name = generateUsername();
-console.log(`NAME ==> ${name}`);
 
 // routs ---------------
 app.use('/', homeRoute);
@@ -29,8 +28,9 @@ app.use('/auth/login', loginRoute)
 app.use('/auth/register', registerRoute)
 // products fetching --------------------
 app.use('/api/products', getAllProductsRoute)
-app.use('/api/products/:id', getAllProductsRoute)
+app.use('/api/products/:id', getProductByIdRoute)
 // creating products API using admin routes ---
+app.use("/admin/products", createNewProductRoute)
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
