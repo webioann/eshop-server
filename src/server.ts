@@ -3,16 +3,10 @@ import type { Request, Response } from 'express';
 import path from 'node:path';
 import config from './config/env.ts';
 import { connectToUsersDB } from './config/connectToUserDB.ts';
-import homeRoute from './routes/home.route.ts';
-import registerRoute from './routes/register.route.ts';
-import loginRoute from './routes/login.route.ts'
 import adminRoute from './routes/admin.route.ts'
 import productsRoute from './routes/product.route.ts'
-
-
+import authRoute from './routes/auth.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
-import { protectRoute } from './middleware/protectRoute.middleware.ts';
-import { generateUsername } from './utils/generateUsername.ts';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -22,19 +16,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routs ---------------
-app.use('/', homeRoute);
-app.use('/test', protectRoute, homeRoute)
-// authentication -----------------------
-app.use('/auth/login', loginRoute)
-app.use('/auth/register', registerRoute)
+app.use('/auth', authRoute)
 app.use('/api', productsRoute)
 app.use("/admin", adminRoute)
-
-// app.use("/admin/products", createNewProductRoute)
-// app.use("/admin/products/:id", updateProductRoute)
-// app.use("/admin/products/:id", deleteProductRoute)
-// app.use("/admin", deleteP)
-
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
