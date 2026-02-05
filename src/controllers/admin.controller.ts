@@ -2,11 +2,11 @@ import type{ Request, Response } from 'express';
 import Product from '../models/product.model.ts';
 
 // /admin/products
-export const createProduct  =  async (req: Request, res: Response) => {
+export const createProduct  =  async (req: Request, res: Response): Promise<void> => {
     try{
         const { name, description, price, stock, category } = req.body;
         if (!name || !description || !price || !stock || !category) {
-            return res.status(400).json({ message: "All fields are required" });
+            res.status(400).json({ message: "All fields are required" });
         }
         // ========================================================
         // =========================================================
@@ -30,21 +30,23 @@ export const createProduct  =  async (req: Request, res: Response) => {
     }
 };
 // /admin/products/:id
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
     try{
         const { id } = req.params;
         const { name, description, price, stock, category } = req.body;
-        const ProductForUpdate = await Product.findById(id);
-        if (!ProductForUpdate) {
-            return res.status(404).json({ message: "Product not found" });
+        const product = await Product.findById(id);
+        if (!product) {
+            res.status(404).json({ message: "Product not found" });
             }
-        if (name) ProductForUpdate.name = name;
-        if (description) ProductForUpdate.description = description;
-        if (price !== undefined) ProductForUpdate.price = parseFloat(price);
-        if (stock !== undefined) ProductForUpdate.stock = parseInt(stock);
-        if (category) ProductForUpdate.category = category;
-        const updatedProduct = await ProductForUpdate.save();
-        res.status(201).json(updatedProduct)
+        if (product) {
+            if (name) product.name = name;
+            if (description) product.description = description;
+            if (price !== undefined) product.price = parseFloat(price);
+            if (stock !== undefined) product.stock = parseInt(stock);
+            if (category) product.category = category;
+            const updatedProduct = await product.save();
+            res.status(201).json(updatedProduct)
+        }
     } catch (error) {
         res.status(500).json({ message: "Internal server error" });
         console.error("Error in time updating product data:", error);
@@ -52,7 +54,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 };
 // admin/products/:id
-export const deleteProduct =  async (req: Request, res: Response) => {
+export const deleteProduct =  async (req: Request, res: Response): Promise<void> => {
     try{
         const productId = req.params.id;
         const product = await Product.findById(productId)

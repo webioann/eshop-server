@@ -1,7 +1,7 @@
 import type{ Request, Response } from 'express';
 import Product from '../models/product.model.ts';
 
-export const getAllProducts = async (req: Request, res: Response) => {
+export const getAllProducts = async (req: Request, res: Response): Promise<void> => {
     try{
         // most recent products first ( -1 )
         // if need use search params
@@ -13,7 +13,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
     }
 };
 
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById = async (req: Request, res: Response): Promise<void> => {
     try{
         const { id } = req.params;
         const product = await Product.findById(id);

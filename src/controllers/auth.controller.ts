@@ -1,5 +1,6 @@
 import type{ Request, Response } from 'express';
 import User from '../models/user.model.ts';
+import Token from '../models/token.model.ts';
 import bcrypt from 'bcryptjs';
 import config  from '../config/env.ts';
 import type { UserType } from '@shared-types/user.types.ts';
@@ -41,12 +42,12 @@ export const register =  async (req: Request, res: Response): Promise<void> => {
     } 
 };
 
-export const login =  async (req: Request, res: Response) => {
+export const login =  async (req: Request, res: Response): Promise<void> => {
     try{
         const { email, password } = req.body;
         const user = await User.findOne({email}).exec() as UserType
         if ( user === null ) {
-            return res.status(400).json({ message: `User is not register go to Register page ==>` });
+            res.status(400).json({ message: `User is not register go to Register page ==>` });
         }
         else {
             const passwordIsCorrect = await bcrypt.compare(password, user.password)
@@ -56,10 +57,10 @@ export const login =  async (req: Request, res: Response) => {
                     , config.JWT_ACCESS_SECRET,
                     { expiresIn: "1h" }
                 )
-                return res.status(200).json({ token });
+                res.status(200).json({ token });
             }
             else {
-                return res.status(400).json({massage: `Email is correct but password is WRONG`});
+                res.status(400).json({massage: `Email is correct but password is WRONG`});
             }
         }
     }
@@ -68,4 +69,8 @@ export const login =  async (req: Request, res: Response) => {
             .status(500)
             .json({ message: `Something went wrong on Login page` });
     } 
+};
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+    
 };
