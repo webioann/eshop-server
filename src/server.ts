@@ -6,7 +6,7 @@ import { connectToUsersDB } from './config/connectToUserDB.ts';
 import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
-// import authRoute from './routes/auth.route.ts'
+import getAllProductsRoute from './routes/getAllProducts.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
@@ -23,8 +23,13 @@ console.log(`NAME ==> ${name}`);
 // routs ---------------
 app.use('/', homeRoute);
 app.use('/test', protectRoute, homeRoute);
+// authentication -----------------------
 app.use('/auth/login', loginRoute)
 app.use('/auth/register', registerRoute)
+// products fetching --------------------
+app.use('/products', getAllProductsRoute)
+
+// creating products API using admin routes ---
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
