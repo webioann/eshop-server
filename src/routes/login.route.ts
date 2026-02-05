@@ -19,7 +19,7 @@ router.post('', async (req: Request, res: Response) => {
             if( passwordIsCorrect ) {
                 const token = jwt.sign(
                     { id: user._id }
-                    , config.JWT_SECRET,
+                    , config.JWT_ACCESS_SECRET,
                     { expiresIn: "1h" }
                 )
                 return res.status(200).json({ token });
