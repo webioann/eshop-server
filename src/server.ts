@@ -7,6 +7,7 @@ import homeRoute from './routes/home.route.ts';
 import registerRoute from './routes/register.route.ts';
 import loginRoute from './routes/login.route.ts'
 import getAllProductsRoute from './routes/getAllProducts.route.ts'
+import detProductById from './routes/getProductById.route.ts'
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
@@ -28,7 +29,7 @@ app.use('/auth/login', loginRoute)
 app.use('/auth/register', registerRoute)
 // products fetching --------------------
 app.use('/products', getAllProductsRoute)
-
+app.use('/products/:id', getAllProductsRoute)
 // creating products API using admin routes ---
 
 app.use(ErrorMiddleware);
