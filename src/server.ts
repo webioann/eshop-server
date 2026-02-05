@@ -9,6 +9,9 @@ import loginRoute from './routes/login.route.ts'
 import getAllProductsRoute from './routes/getAllProducts.route.ts'
 import getProductByIdRoute from './routes/getProductById.route.ts'
 import createNewProductRoute from './routes/createNewProduct.route.ts'
+import updateProductRoute from './routes/updateProduct.route.ts'
+import deleteProductRoute from './routes/deleteProduct.route.ts'
+
 import ErrorMiddleware  from './middleware/error.middleware.ts';
 import { protectRoute } from './middleware/protectRoute.middleware.ts';
 import { generateUsername } from './utils/generateUsername.ts';
@@ -31,6 +34,8 @@ app.use('/api/products', getAllProductsRoute)
 app.use('/api/products/:id', getProductByIdRoute)
 // creating products API using admin routes ---
 app.use("/admin/products", createNewProductRoute)
+app.use("/admin/products/:id", updateProductRoute)
+app.use("/admin/products/:id", deleteProductRoute)
 
 app.use(ErrorMiddleware);
 // WEB SERVER FOR ADMIN PANEL IN PRODUCTION
