@@ -4,7 +4,7 @@ import { createProduct, updateProduct, deleteProduct } from '../controllers/admi
 import { getAllProducts } from '../controllers/product.controller.ts';
 import protectedRole from '../middleware/checkIfAdmin.ts';
 
-router.use(protectedRole("admin"))
+// router.use(protectedRole("admin"))
 
 router.get("/products", getAllProducts)
 router.post("/products", createProduct)

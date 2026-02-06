@@ -59,10 +59,23 @@ export const login =  async (req: Request, res: Response): Promise<void> => {
                     email: user.email,
                     role: user.role
                 }
-                const token = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                const accessToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                const refreshToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,
+                    secure: config.NODE_ENV === "production",
+                    sameSite: "strict"
+                })
                 res.status(200).json({ 
-                    token: token,
-                    message: "Login successful" 
+                    token: accessToken,
+                    message: "Login successful" ,
+                    user: {
+                        userId: user._id,
+                        username: user.username,
+                        email: user.email,
+                        imageUrl: user.imageUrl,
+                        role: user.role
+                    }
                 });
             }
             else {
