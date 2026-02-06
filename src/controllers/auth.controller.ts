@@ -47,20 +47,25 @@ export const login =  async (req: Request, res: Response): Promise<void> => {
         const { email, password } = req.body;
         const user = await User.findOne({email}).exec() as UserType
         if ( user === null ) {
-            res.status(400).json({ message: `User is not register go to Register page ==>` });
+            res.status(404).json({ message: "User is not found - go to Register" });
         }
         else {
             const passwordIsCorrect = await bcrypt.compare(password, user.password)
             if( passwordIsCorrect ) {
-                const token = jwt.sign(
-                    { id: user._id }
-                    , config.JWT_ACCESS_SECRET,
-                    { expiresIn: "1h" }
-                )
-                res.status(200).json({ token });
+                const payload = {
+                    userId: user._id,
+                    username: user.username,
+                    email: user.email,
+                    role: user.role
+                }
+                const token = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                res.status(200).json({ 
+                    token: token,
+                    message: "Login successful" 
+                });
             }
             else {
-                res.status(400).json({massage: `Email is correct but password is WRONG`});
+                res.status(400).json({massage: "Email is correct but password is WRONG"});
             }
         }
     }
