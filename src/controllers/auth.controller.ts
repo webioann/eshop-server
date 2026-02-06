@@ -9,8 +9,9 @@ import jwt from 'jsonwebtoken';
 export const register =  async (req: Request, res: Response): Promise<void> => {
     try{
         const { username, email, password, role } = req.body;
-        const user = await User.findOne({username}).exec();
+        const user = await User.findOne({email}).exec();
         const hashedPassword = await bcrypt.hash(password, 10)
+        //  if USER do not exists yet
         if( user === null ) {
             const newUser = new User({
                 username,
@@ -23,15 +24,15 @@ export const register =  async (req: Request, res: Response): Promise<void> => {
             await newUser.save();
             res.status(201).json({ message: `User ${username} created successfully` });
         }
-        // User already exists
+        // if USER already exists --> LOGIN logic
         if(user !== null) {
-            const decryptedPassword = await bcrypt.compare(user.password, hashedPassword)
-            if( user.email === email && decryptedPassword ) {
+            const passwordIsCorrect = await bcrypt.compare(password, hashedPassword)
+            if( user.email === email && passwordIsCorrect ) {
                 res.status(200).json({ message: `User ${username} welcome back` });
             }
             // if password is not correct
-            if( user.email === email && user.password !== hashedPassword ) {
-                res.status(203).json({ message: `User with email: ${email} already exists, but password is wrong - enter correct password` });
+            if( user.email === email && !passwordIsCorrect ) {
+                res.status(401).json({ message: "Enter correct password" });
             }
         }
     }
