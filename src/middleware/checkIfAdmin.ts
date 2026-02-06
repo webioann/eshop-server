@@ -1,13 +1,16 @@
 import type { Response, Request, NextFunction } from "express";
+import type { RolesType } from "@shared-types/user.types.ts";
 
-export const checkIfAdmin = async (req: Request, res: Response, next: NextFunction) => {
-    try{
-        if (!req.user) {
-            return res.status(401).json({ message: "Unauthorized - user not found" });
-        }
-        if( req.user.role !== "admin" ) {
-            return res.status(403).json({ message: "Forbidden - admin access only" });
+const protectedRole = (roles: RolesType) => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        const userRole = req.user.role
+        if ( userRole !== roles ) {
+            res.status(403).json({
+                message: "Access denied"
+            })
         }
         next();
-    } catch (error) { console.log(error); }
+    }
 }
+export default protectedRole;
+
