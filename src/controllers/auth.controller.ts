@@ -12,6 +12,10 @@ const cookieOptions: CookieOptions = {
     sameSite: "strict"
 }
 
+const authorizationProcess = async (req: Request, res: Response): Promise<void> => {
+
+};
+
 export const register =  async (req: Request, res: Response): Promise<void> => {
     try{
         const { username, email, password, role } = req.body;
@@ -30,33 +34,8 @@ export const register =  async (req: Request, res: Response): Promise<void> => {
             await newUser.save();
             res.status(201).json({ message: `User ${username} created successfully` });
         }
-        // if USER already exists --> LOGIN logic
+        // if USER already exists --> LOGIN logic --> LOGIN logic =======
         if(user !== null) {
-            const passwordIsCorrect = await bcrypt.compare(password, hashedPassword)
-            if( user.email === email && passwordIsCorrect ) {
-                res.status(200).json({ message: `User ${username} welcome back` });
-            }
-            // if password is not correct
-            if( user.email === email && !passwordIsCorrect ) {
-                res.status(401).json({ message: "Enter correct password" });
-            }
-        }
-    }
-    catch (error) {
-        res
-            .status(500)
-            .json({ message: "Something went wrong on Register controller" });
-    } 
-};
-
-export const login =  async (req: Request, res: Response): Promise<void> => {
-    try{
-        const { email, password } = req.body;
-        const user = await User.findOne({email}).exec() as UserType
-        if ( user === null ) {
-            res.status(404).json({ message: "User is not found - go to Register" });
-        }
-        else {
             const passwordIsCorrect = await bcrypt.compare(password, user.password)
             if( passwordIsCorrect ) {
                 const payload = {
@@ -80,15 +59,60 @@ export const login =  async (req: Request, res: Response): Promise<void> => {
                     }
                 });
             }
-            else {
-                res.status(400).json({massage: "Email is correct but password is WRONG"});
+            // if password is not correct
+            if( !passwordIsCorrect ) {
+                res.status(401).json({ message: "Enter correct password" });
             }
         }
     }
     catch (error) {
         res
             .status(500)
-            .json({ message: `Something went wrong on Login controller` });
+            .json({ message: "Something went wrong on Register controller" });
+    } 
+};
+
+export const login =  async (req: Request, res: Response): Promise<void> => {
+    try{
+        const { email, password } = req.body;
+        const user = await User.findOne({email}).exec() as UserType
+        if ( user === null ) {
+            res.status(404).json({ message: "User is not found - go to Register" });
+        }
+        if ( user !== null ) {
+            const passwordIsCorrect = await bcrypt.compare(password, user.password)
+            if( passwordIsCorrect ) {
+                const payload = {
+                    userId: user._id,
+                    username: user.username,
+                    email: user.email,
+                    role: user.role
+                }
+                const accessToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                const refreshToken = jwt.sign(payload, config.JWT_ACCESS_SECRET, { expiresIn: "1h" })
+                res.cookie("refreshToken", refreshToken, cookieOptions)
+                res.status(200).json({ 
+                    token: accessToken,
+                    message: "Login successful" ,
+                    user: {
+                        userId: user._id,
+                        username: user.username,
+                        email: user.email,
+                        imageUrl: user.imageUrl,
+                        role: user.role
+                    }
+                });
+            }
+            // if password is not correct
+            if( !passwordIsCorrect ) {
+                res.status(401).json({ message: "Enter correct password" });
+            }
+        }
+    }
+    catch (error) {
+        res
+            .status(500)
+            .json({ message: "Something went wrong on Login controller" });
     } 
 };
 

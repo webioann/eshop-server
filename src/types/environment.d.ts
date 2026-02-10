@@ -14,13 +14,14 @@ declare global {
             ACCESS_TOKEN_EXPIRY: string;
             REFRESH_TOKEN_EXPIRY: string;
             WHITELIST: string[];
-
             USERS_DB_URI: string;
             PRODUCTS_DB_URI: string;
             MONGODB_URI: string;
-            CLERK_PUBLISHABLE_KEY: string;
-            CLERK_SECRET_KEY: string;
-            CLERK_FRONTEND_API: string;
+            CLOUD_NAME: string;
+            CLOUD_API_KEY: string;
+            CLOUD_SECRET: string;
+            CLOUDINARY_URL: string;
+        
         }
     }
 }
